@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.shierblog.douban.movie.crawler.dao.MovieInfoDao">
+<!--保存电影信息-->
+    <insert id="saveMovieInfo" parameterType="map">
+       INSERT      INTO `movie_info`
+       (
+       `movie_id`
+      ,`movie_name`
+      ,`movie_director`
+      ,`want_to_movie_number`
+      ,`watched_the_movie_number`
+      ,`release_date`
+      ,`movie_image`
+      ,`movie_imdb`
+      ,`movie_date_length`
+      ,`movie_introduction`
+      ,`movie_ratings`
+      ,`movie_ratings_num`
+      ,`1star`
+      ,`2star`
+      ,`3star`
+      ,`4star`
+      ,`5star`
+      ,`movie_actor`
+      ,`movie_type`
+      ,`country`
+      ,`language`
+     ,`create_time`
+    )VALUES
+       (
+       #{movieId}
+      , #{movieName}
+       ,#{movieDirector}
+       ,#{wantToMovieNumber}
+       ,#{watchedTheMovieNumber}
+       ,#{releaseDate}
+       ,#{movieImage}
+       ,#{movieIMDb}
+       ,#{movieDateLength}
+       ,#{movieIntroduction}
+       ,#{movieRatings}
+       ,#{movieRatingsNum}
+       ,#{1Star}
+       ,#{2Star}
+       ,#{3Star}
+       ,#{4Star}
+       ,#{5Star}
+       ,#{movieActor}
+       ,#{movieType}
+       ,#{country}
+       ,#{language}
+       ,NOW()
+      )
+  ON DUPLICATE KEY UPDATE
+        `movie_name`               =   #{movieName}
+      ,`movie_director`            =   #{movieDirector}
+      ,`want_to_movie_number`      =   #{wantToMovieNumber}
+      ,`watched_the_movie_number`  =   #{wantToMovieNumber}
+      ,`release_date`              =   #{releaseDate}
+      ,`movie_image`               =   #{movieImage}
+      ,`movie_imdb`                =   #{movieIMDb}
+      ,`movie_date_length`         =   #{movieDateLength}
+      ,`movie_introduction`        =   #{movieIntroduction}
+      ,`movie_ratings`             =   #{movieRatings}
+      ,`movie_ratings_num`         =   #{movieRatingsNum}
+      ,`1star`                     =   #{1Star}
+      ,`2star`                     =   #{2Star}
+      ,`3star`                     =   #{3Star}
+      ,`4star`                     =   #{4Star}
+      ,`5star`                     =   #{5Star}
+      ,`movie_actor`               =   #{movieActor}
+      ,`movie_type`                =   #{movieType}
+      ,`country`                   =   #{country}
+      ,`language`                  =   #{language}
+     ,`create_time`                =   NOW()
+
+   </insert>
+    <!--保存电影相关评论-->
+    <insert id="saveUserComment" parameterType="list">
+        INSERT INTO `movie_comment`
+        (
+       `movie_id`
+       ,`movie_evaluate_user_name`
+      , `movie_evaluate`
+      ,`movie_evaluate_user_recommend`
+      ,`movie_evaluate_user_comment_date`
+      ,`movie_evaluate_user_comment_like`
+      ,`create_time`
+        )
+        VALUES
+        <foreach collection="list" item="item" separator="," >
+            (
+             #{item.movieId}
+            ,#{item.movieEvaluateUserName}
+            ,#{item.movieEvaluate}
+            ,#{item.movieEvaluateUserRecommend}
+            ,#{item.movieEvaluateUserCommentDate}
+            ,#{item.movieEvaluateUserCommentLike}
+            ,NOW()
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        `movie_evaluate_user_name`            =  VALUES(`movie_evaluate_user_name`)
+        , `movie_evaluate`                    =  VALUES(`movie_evaluate`)
+        ,`movie_evaluate_user_recommend`      = VALUES(`movie_evaluate_user_recommend`)
+        ,`movie_evaluate_user_comment_date`   = VALUES(`movie_evaluate_user_comment_date`)
+        ,`movie_evaluate_user_comment_like`   =  VALUES(`movie_evaluate_user_comment_like`)
+        ,`create_time`                        = VALUES(`create_time`)
+
+
+    </insert>
+</mapper>
