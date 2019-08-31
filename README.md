@@ -1,5 +1,8 @@
 ## 项目效果图 
 希望能帮助到各位，如果您觉得对您有帮助的话，请给我一个star。万分感谢~
+![image](https://github.com/LuckyMango/spider-doubanMovie/blob/master/example%20.jpg)
+
+
 
 
 ### 启动和注意事项？
